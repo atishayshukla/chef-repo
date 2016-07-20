@@ -33,14 +33,36 @@ end
 # TODO: This is not idempotent, this will run everytime not the desired state
 execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
 
+# Change group tomcat for conf
+
+execute 'chgrp -R tomcat /opt/tomcat/conf'
+
 # Update Permissions
 
 directory '/opt/tomcat/conf' do
   group 'tomcat'  
-  mode '0700'
+  mode '0070'
   action :create
   recursive true
 end
+
+# Then make the tomcat user the owner of the webapps, work, temp, and logs directories:
+
+execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
+
+template '/etc/systemd/system/tomcat.service' do
+  source 'tomcat.service.erb'
+end
+
+execute 'systemctl daemon-reload'
+
+service 'tomcat' do
+  action [:start, :enable]
+end
+
+  
+
+
 
   
 
