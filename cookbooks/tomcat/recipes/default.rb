@@ -40,11 +40,10 @@ execute 'chgrp -R tomcat /opt/tomcat/conf'
 # Update Permissions
 
 directory '/opt/tomcat/conf' do
-  group 'tomcat'  
   mode '0070'
-  action :create
-  recursive true
 end
+
+execute 'chmod g+r /opt/tomcat/conf/*'
 
 # Then make the tomcat user the owner of the webapps, work, temp, and logs directories:
 
