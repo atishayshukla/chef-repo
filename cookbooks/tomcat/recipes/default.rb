@@ -30,7 +30,18 @@ directory '/opt/tomcat' do
   action :create
 end
 
+# TODO: This is not idempotent, this will run everytime not the desired state
 execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
+
+# Update Permissions
+
+directory '/opt/tomcat/conf' do
+  group 'tomcat'  
+  mode '0700'
+  action :create
+  recursive true
+end
+
   
 
 

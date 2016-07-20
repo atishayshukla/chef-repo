@@ -25,5 +25,24 @@ describe 'tomcat::default' do
   		it { should exist }
   		it { should be_directory }
   	end
+
+  	# Test that conf directory now exists and mode is correct
+
+  	describe file('/opt/tomcat/conf') do
+  		it { should exist }
+  		it { should be_directory }
+  		it { should be_mode 70 }
+
+  	end
+
+  	# Test for the ownership of webapp directory log directory
+  	# sudo chown -R tomcat webapps/ work/ temp/ logs/
+
+ 	['webapps', 'work', 'temp', 'logs'].each do |path|
+	  	describe file("/opt/tomcat/#{path}") do 
+	  		it { should exist }
+	  		it { should be_owned_by 'tomcat' }
+	  	end
+	end
   	
 end
