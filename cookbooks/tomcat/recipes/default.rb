@@ -13,7 +13,7 @@ group 'tomcat' do
  action :create
 end
 
-user 'random' do
+user 'tomcat' do
  action :create
  comment 'tomcat User'
  home '/opt/tomcat'

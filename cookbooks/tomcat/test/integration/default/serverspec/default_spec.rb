@@ -12,11 +12,11 @@ describe 'tomcat::default' do
   	end
 
   	describe group 'tomcat' do
-  		it { should exists }
+  		it { should exist }
   	end
 
   	describe user 'tomcat' do
-  		it { should exists }
+  		it { should exist }
   		it { should belong_to_group 'tomcat'}
   		it { should have_home_directory '/opt/tomcat'}
   	end
