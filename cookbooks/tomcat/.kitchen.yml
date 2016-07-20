@@ -1,6 +1,7 @@
 ---
 driver:
   name: docker
+  privileged: true 
 
 driver_config:
   use_sudo: false

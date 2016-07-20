@@ -53,9 +53,8 @@ template '/etc/systemd/system/tomcat.service' do
   source 'tomcat.service.erb'
 end
 
-execute 'systemctl daemon-reload' do
-   user 'root'
-end
+execute 'systemctl daemon-reload'
+
 
 service 'tomcat' do
   action [:start, :enable]
