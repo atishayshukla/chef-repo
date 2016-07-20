@@ -4,7 +4,7 @@ driver:
   privileged: true 
 
 driver_config:
-  use_sudo: false
+  use_sudo: false  
 
 provisioner:
   name: chef_zero
