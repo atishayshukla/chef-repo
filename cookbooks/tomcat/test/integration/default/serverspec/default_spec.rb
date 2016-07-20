@@ -7,18 +7,23 @@ describe 'tomcat::default' do
   		its(:stdout) { should match /Tomcat/ }
   	end
 
-  	describe package 'java-1.7.0-openjdk-devel' do
+  	describe package('java-1.7.0-openjdk-devel') do
   	  	it { should be_installed }
   	end
 
-  	describe group 'tomcat' do
+  	describe group('tomcat') do
   		it { should exist }
   	end
 
-  	describe user 'tomcat' do
+  	describe user('tomcat') do
   		it { should exist }
   		it { should belong_to_group 'tomcat'}
   		it { should have_home_directory '/opt/tomcat'}
+  	end
+# There is no directory in unix so use file and check for be directory
+  	describe file('/opt/tomcat') do
+  		it { should exist }
+  		it { should be_directory }
   	end
   	
 end
