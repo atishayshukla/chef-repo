@@ -9,18 +9,18 @@ package 'java-1.7.0-openjdk-devel' do
   action :install
 end
 
-#group 'tomcat' do
-#  action :create
-#end
+group 'tomcat' do
+ action :create
+end
 
-#user 'random' do
-#  action :create
-#  comment 'tomcat User'
-#  home '/opt/tomcat'
-#  shell '/bin/nologin'
-#  group 'tomcat'
-#  manage_home false
-#end
+user 'random' do
+ action :create
+ comment 'tomcat User'
+ home '/opt/tomcat'
+ shell '/bin/nologin'
+ group 'tomcat'
+ manage_home false
+end
 
 
 
