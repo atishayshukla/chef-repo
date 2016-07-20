@@ -9,7 +9,7 @@ package 'java-1.7.0-openjdk-devel' do
   action :install
 end
 
-group 'tomcat' do
+=begingroup 'tomcat' do
   action :create
 end
 
@@ -20,7 +20,7 @@ user 'random' do
   shell '/bin/nologin'
   group 'tomcat'
   manage_home false
-end
+end=end
 
 
 
