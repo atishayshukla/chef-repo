@@ -24,69 +24,40 @@ end
 
 remote_file 'apache-tomcat-8.0.36.tar.gz' do
  source 'http://mirror.fibergrid.in/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
- notifies :create, 'directory[/opt/tomcat]', :immediately
- notifies :run, 'execute[tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1]', :immediately
- notifies :create, 'directory[/opt/tomcat/conf]', :immediately
- notifies :run, 'execute[chgrp -R tomcat /opt/tomcat/conf]', :immediately
- notifies :run, 'execute[chmod g+rwx /opt/tomcat/conf]', :immediately
- notifies :run, 'execute[chmod g+r /opt/tomcat/conf/*]', :immediately
 end
 
-# This should be created only once, only when we change the remote file that is why above one uses notifies
 directory '/opt/tomcat' do
-  action :nothing 
-  #notifies :run, 'execute[tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1]', :immediately 
-  #notifies :run, 'execute[chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/]', :immediately 
+  action :create
 end
 
 # TODO: This is not idempotent, this will run everytime not the desired state
-execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1' do
-  action :nothing
-  #notifies :create, 'directory[/opt/tomcat/conf]', :immediately
-end
-
-directory '/opt/tomcat/conf' do
-  mode '0070'
-  action :nothing
-  #notifies :run, 'execute[chgrp -R tomcat /opt/tomcat/conf]', :immediately
-  #notifies :run, 'execute[chmod g+r /opt/tomcat/conf/*]', :immediately
-end
+execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
 
 # Change group tomcat for conf
 
-execute 'chgrp -R tomcat /opt/tomcat/conf' do
-  action :nothing
-end
+execute 'chgrp -R tomcat /opt/tomcat/conf'
 
 # Update Permissions
 
-execute 'chmod g+rwx /opt/tomcat/conf' do
-  action :nothing
+directory '/opt/tomcat/conf' do
+  mode '0070'
 end
 
-execute 'chmod g+r /opt/tomcat/conf/*' do
-  action :nothing
-end
+execute 'chmod g+r /opt/tomcat/conf/*'
 
 # Then make the tomcat user the owner of the webapps, work, temp, and logs directories:
 
-execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/' do
- action :nothing
-end
+execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
 
 template '/etc/systemd/system/tomcat.service' do
   source 'tomcat.service.erb'
-  notifies :run, 'execute[systemctl daemon-reload]', :immediately
-  notifies :restart, 'service[tomcat]'
 end
 
-execute 'systemctl daemon-reload' do
-  action :nothing
-end
+execute 'systemctl daemon-reload'
 
 
 service 'tomcat' do
-  action [:start, :enable]  
+  action [:start, :enable]
 end
 
   
