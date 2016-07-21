@@ -51,11 +51,8 @@ execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp
 
 template '/etc/systemd/system/tomcat.service' do
   source 'tomcat.service.erb'
-<<<<<<< HEAD
   #notifies :run, 'execute[systemctl daemon-reload]', :immediately
-  #notifies :restart, 'service[tomcat]'
-=======
->>>>>>> cc3bf367102068edb199d67b08d75c87dbb45360
+  #notifies :restart, 'service[tomcat]
 end
 
 execute 'systemctl daemon-reload'
@@ -64,15 +61,3 @@ execute 'systemctl daemon-reload'
 service 'tomcat' do
   action [:start, :enable]
 end
-
-  
-
-
-
-  
-
-
-
-
-
-
