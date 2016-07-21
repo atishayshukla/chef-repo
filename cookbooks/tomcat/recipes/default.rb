@@ -76,8 +76,8 @@ end
 
 template '/etc/systemd/system/tomcat.service' do
   source 'tomcat.service.erb'
-  notifies :run, 'execute[systemctl daemon-reload]', :immediately
-  notifies :restart, 'service[tomcat]'
+  #notifies :run, 'execute[systemctl daemon-reload]', :immediately
+  #notifies :restart, 'service[tomcat]'
 end
 
 execute 'systemctl daemon-reload' do
