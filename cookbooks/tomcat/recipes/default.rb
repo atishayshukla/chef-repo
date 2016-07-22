@@ -35,23 +35,38 @@ end
 execute 'untar_apache_tomcat' do
  command 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
  action :nothing
+ notifies :run, 'execute[change_group_conf]', :immediately
+ notifies :run, 'execute[chmod_conf]', :immediately
+ notifies :run, 'execute[owner_change_webapps_work_temp_logs]', :immediately
 end
 
-# Change group tomcat for conf
-
-execute 'chgrp -R tomcat /opt/tomcat/conf'
-
-# Update Permissions
+# This will first be created before updating permissions
 
 directory '/opt/tomcat/conf' do
   mode '0070'
 end
 
-execute 'chmod g+r /opt/tomcat/conf/*'
+# Change group tomcat for conf
+
+execute 'change_group_conf' do
+  command 'chgrp -R tomcat /opt/tomcat/conf'
+  action :nothing
+end
+
+
+# Update Permissions
+
+execute 'chmod_conf' do
+  command 'chmod g+r /opt/tomcat/conf/*'
+  action :nothing
+end
 
 # Then make the tomcat user the owner of the webapps, work, temp, and logs directories:
 
-execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
+execute 'owner_change_webapps_work_temp_logs' do
+  command 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
+  action :nothing
+end
 
 template '/etc/systemd/system/tomcat.service' do
   source 'tomcat.service.erb'
