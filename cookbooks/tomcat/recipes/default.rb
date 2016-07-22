@@ -24,6 +24,7 @@ end
 
 remote_file 'apache-tomcat-8.0.36.tar.gz' do
  source 'http://mirror.fibergrid.in/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
+ notifies :run, 'execute[untar_apache_tomcat]', :immediately
 end
 
 directory '/opt/tomcat' do
@@ -31,7 +32,10 @@ directory '/opt/tomcat' do
 end
 
 # TODO: This is not idempotent, this will run everytime not the desired state
-execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
+execute 'untar_apache_tomcat' do
+ command 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
+ action :nothing
+end
 
 # Change group tomcat for conf
 
