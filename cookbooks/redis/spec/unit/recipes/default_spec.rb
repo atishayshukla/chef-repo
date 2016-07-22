@@ -30,7 +30,9 @@ describe 'redis::default' do
       expect(chef_run).to create_remote_file('/tmp/redis-2.8.9')
     end
 
-    it 'unzips the application'
+    it 'unzips the application' do
+      expect(chef_run).to run_execute('tar xzf /tmp/redis-2.8.9.tar.gz')
+    end
 
     it 'builds and installs the application'
 
