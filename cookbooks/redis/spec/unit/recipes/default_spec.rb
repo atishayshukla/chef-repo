@@ -26,7 +26,9 @@ describe 'redis::default' do
       expect(chef_run).to install_package('tcl8.5')
     end
 
-    it 'retrives the application from source'
+    it 'retrives the application from source' do
+      expect(chef_run).to create_remote_file('/tmp/redis-2.8.9')
+    end
 
     it 'unzips the application'
 
