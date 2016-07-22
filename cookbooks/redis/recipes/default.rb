@@ -14,7 +14,9 @@ package "build-essential"
 
 package "tcl8.5"
 
-version_number = '2.8.9'
+# version_number = '2.8.9' This works but not the right place move to attribute
+
+version_number = node[redis][version_number]
 
 # download http://download.redis.io/releases/redis-2.8.9.tar.gz
 remote_file "/tmp/redis-#{version_number}.tar.gz" do
