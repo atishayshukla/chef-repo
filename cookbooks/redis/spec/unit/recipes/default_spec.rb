@@ -31,21 +31,21 @@ describe 'redis::default' do
     end
 
     it 'retrives the application from source' do
-      expect(chef_run).to create_remote_file('/tmp/redis-#{version}.tar.gz')
+      expect(chef_run).to create_remote_file("/tmp/redis-#{version}.tar.gz")
     end
 
     it 'unzips the application' do
       # expect(chef_run).to run_execute('tar xzf /tmp/redis-#{version}.tar.gz')
       # This expectation is going to fail as in recipe
       # This action does nothing so we will look in below how to implement it
-      resource = chef_run.remote_file('/tmp/redis-#{version}.tar.gz')
-      expect(resource).to notify('execute[tar xzf redis-#{version}.tar.gz]').to(:run).immediately
+      resource = chef_run.remote_file("/tmp/redis-#{version}.tar.gz")
+      expect(resource).to notify("execute[tar xzf redis-#{version}.tar.gz]").to(:run).immediately
       # This is how notify works
     end
 
     it 'builds and installs the application' do
-      resource = chef_run.execute('tar xzf redis-#{version}.tar.gz')
-      expect(resource).to notify('execute[make && make install]').to(:run).immediately
+      resource = chef_run.execute("tar xzf redis-#{version}.tar.gz")
+      expect(resource).to notify("execute[make && make install]").to(:run).immediately
     end
 
     it 'installs the server' do
