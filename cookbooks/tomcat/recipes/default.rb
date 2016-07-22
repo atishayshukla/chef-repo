@@ -24,6 +24,7 @@ end
 
 remote_file 'apache-tomcat-8.0.36.tar.gz' do
  source 'http://mirror.fibergrid.in/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz'
+ notifies :run, 'execute[untar_apache_tomcat]', :immediately
 end
 
 directory '/opt/tomcat' do
@@ -31,33 +32,55 @@ directory '/opt/tomcat' do
 end
 
 # TODO: This is not idempotent, this will run everytime not the desired state
-execute 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
+execute 'untar_apache_tomcat' do
+ command 'tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1'
+ action :nothing
+ notifies :run, 'execute[change_group_conf]', :immediately
+ notifies :run, 'execute[chmod_conf]', :immediately
+ notifies :run, 'execute[owner_change_webapps_work_temp_logs]', :immediately
+end
 
-# Change group tomcat for conf
-
-execute 'chgrp -R tomcat /opt/tomcat/conf'
-
-# Update Permissions
+# This will first be created before updating permissions
 
 directory '/opt/tomcat/conf' do
   mode '0070'
 end
 
-execute 'chmod g+r /opt/tomcat/conf/*'
+# Change group tomcat for conf
+
+execute 'change_group_conf' do
+  command 'chgrp -R tomcat /opt/tomcat/conf'
+  action :nothing
+end
+
+
+# Update Permissions
+
+execute 'chmod_conf' do
+  command 'chmod g+r /opt/tomcat/conf/*'
+  action :nothing
+end
 
 # Then make the tomcat user the owner of the webapps, work, temp, and logs directories:
 
-execute 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
+execute 'owner_change_webapps_work_temp_logs' do
+  command 'chown -R tomcat /opt/tomcat/webapps/ /opt/tomcat/work/ /opt/tomcat/temp/ /opt/tomcat/logs/'
+  action :nothing
+end
 
 template '/etc/systemd/system/tomcat.service' do
   source 'tomcat.service.erb'
-  #notifies :run, 'execute[systemctl daemon-reload]', :immediately
+  notifies :run, 'execute[daemon-reload]', :immediately
   #notifies :restart, 'service[tomcat]
 end
 
-execute 'systemctl daemon-reload'
+execute 'daemon-reload' do
+	command 'systemctl daemon-reload'
+	action :nothing
+end
 
 
 service 'tomcat' do
+  supports :status => :true, :restart => :true, :reload => :true
   action [:start, :enable]
 end
