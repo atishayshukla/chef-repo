@@ -7,8 +7,13 @@
 # Translated Instructions From:
 # https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis
 #
+# Attempt to make resources idempotent
 
-execute "apt-get update"
+execute "apt-get update" do
+  command "apt-get update"
+  ignore_failure true
+  not_if do ::File.exists?('/var/lib/apt/periodic/update-success-stamp') end  # This will make it idempotent
+end
 
 package "build-essential"
 
