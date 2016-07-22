@@ -15,7 +15,7 @@ package "build-essential"
 package "tcl8.5"
 
 # download http://download.redis.io/releases/redis-2.8.9.tar.gz
-remote_file "~/redis-2.8.9.tar.gz" do
+remote_file "redis-2.8.9.tar.gz" do
   source "http://download.redis.io/releases/redis-2.8.9.tar.gz"
   notifies :run, "execute[tar xzf redis-2.8.9.tar.gz]", :immediately
 end
