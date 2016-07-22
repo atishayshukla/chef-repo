@@ -1,0 +1,22 @@
+I, [2016-07-22T04:14:28.572778 #14691]  INFO -- default-ubuntu-1404: -----> Setting up <default-ubuntu-1404>...
+W, [2016-07-22T04:14:28.573548 #14691]  WARN -- default-ubuntu-1404: Running legacy setup for 'Docker' Driver
+I, [2016-07-22T04:14:29.435708 #14691]  INFO -- default-ubuntu-1404: -----> Busser installation detected (busser)
+I, [2016-07-22T04:14:29.435822 #14691]  INFO -- default-ubuntu-1404: Installing Busser plugins: busser-serverspec
+I, [2016-07-22T04:14:59.446750 #14691]  INFO -- default-ubuntu-1404: Plugin serverspec already installed
+I, [2016-07-22T04:14:59.489678 #14691]  INFO -- default-ubuntu-1404: Finished setting up <default-ubuntu-1404> (0m30.91s).
+I, [2016-07-22T04:14:59.489883 #14691]  INFO -- default-ubuntu-1404: -----> Verifying <default-ubuntu-1404>...
+W, [2016-07-22T04:14:59.491153 #14691]  WARN -- default-ubuntu-1404: Running legacy verify for 'Docker' Driver
+I, [2016-07-22T04:14:59.491743 #14691]  INFO -- default-ubuntu-1404: Preparing files for transfer
+I, [2016-07-22T04:14:59.787079 #14691]  INFO -- default-ubuntu-1404: Removing /tmp/verifier/suites/serverspec
+I, [2016-07-22T04:14:59.789100 #14691]  INFO -- default-ubuntu-1404: Transferring files to <default-ubuntu-1404>
+I, [2016-07-22T04:15:00.195975 #14691]  INFO -- default-ubuntu-1404: -----> Running serverspec test suite
+I, [2016-07-22T04:15:00.297013 #14691]  INFO -- default-ubuntu-1404: /opt/chef/embedded/bin/ruby -I/tmp/verifier/suites/serverspec -I/tmp/verifier/gems/gems/rspec-support-3.5.0/lib:/tmp/verifier/gems/gems/rspec-core-3.5.1/lib /opt/chef/embedded/bin/rspec --pattern /tmp/verifier/suites/serverspec/\*\*/\*_spec.rb --color --format documentation --default-path /tmp/verifier/suites/serverspec
+I, [2016-07-22T04:15:00.811152 #14691]  INFO -- default-ubuntu-1404: 
+I, [2016-07-22T04:15:00.811285 #14691]  INFO -- default-ubuntu-1404: redis::default
+I, [2016-07-22T04:15:00.811308 #14691]  INFO -- default-ubuntu-1404:   Service "redis_6379"
+I, [2016-07-22T04:15:00.968723 #14691]  INFO -- default-ubuntu-1404: [32m    should be running[0m
+I, [2016-07-22T04:15:00.968809 #14691]  INFO -- default-ubuntu-1404: 
+I, [2016-07-22T04:15:00.968838 #14691]  INFO -- default-ubuntu-1404: Finished in 0.15225 seconds (files took 0.47143 seconds to load)
+I, [2016-07-22T04:15:00.968865 #14691]  INFO -- default-ubuntu-1404: [32m1 example, 0 failures[0m
+I, [2016-07-22T04:15:00.968885 #14691]  INFO -- default-ubuntu-1404: 
+I, [2016-07-22T04:15:00.994671 #14691]  INFO -- default-ubuntu-1404: Finished verifying <default-ubuntu-1404> (0m1.50s).

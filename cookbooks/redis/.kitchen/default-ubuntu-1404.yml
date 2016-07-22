@@ -1,0 +1,7 @@
+---
+ssh_key: "/home/atishay/chef-repo/cookbooks/redis/.kitchen/docker_id_rsa"
+image_id: a038a19c0d99
+container_id: 2b0cf403ad508209da6dbded20d7f83491b8724190922d4b9836d62d67a7e60b
+hostname: localhost
+port: 32769
+last_action: verify
