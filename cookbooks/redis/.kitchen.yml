@@ -1,6 +1,6 @@
 ---
 driver:
-  name: vagrant
+  name: docker
 
 provisioner:
   name: chef_zero
@@ -12,7 +12,9 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
-  - name: centos-7.1
+    driver_config:
+      use_sudo: false
+      privileged: true
 
 suites:
   - name: default
