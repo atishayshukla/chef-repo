@@ -16,5 +16,20 @@ describe 'redis::default' do
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
+
+    it 'updates the package repository'
+
+    it 'installs the necessary packages'
+
+    it 'retrives the application from source'
+
+    it 'unzips the application'
+
+    it 'builds and installs the application'
+
+    it 'installs the server'
+
+    it 'starts the service'
+
   end
 end
