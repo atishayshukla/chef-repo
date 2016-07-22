@@ -18,7 +18,7 @@ describe 'redis::default' do
     end
 
     it 'updates the package repository' do
-      expect(chef_run).to execute[apt-get update]
+      expect(chef_run).to run_execute('apt-get update')
     end
 
     it 'installs the necessary packages'
